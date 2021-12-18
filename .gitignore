@@ -1,0 +1,5 @@
+# Ignore training_dataset folder
+/training_dataset/
+# Default ignored files
+best_model.pth
+model_best_checkpoint.pth.tar
