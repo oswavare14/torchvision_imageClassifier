@@ -4,9 +4,11 @@ import torchvision.transforms as transforms
 import torchvision.models as models
 import torch.nn as nn
 import torch.optim as optim
+import matplotlib.pyplot as plt
+import numpy as np
 
-train_dataset_path = '/content/drive/MyDrive/classfire_torchvision/training_dataset/'
-test_dataset_path = './content/drive/MyDrive/classfire_torchvision/training_dataset/'
+train_dataset_path = './training_dataset/'
+test_dataset_path = './training_dataset/'
 mean = [0.5081, 0.5185, 0.4952]
 std = [0.2001, 0.2005, 0.2181]
 
@@ -130,4 +132,15 @@ loss_fn = nn.CrossEntropyLoss()
 
 optimizer = optim.SGD(resnet18_model.parameters(), lr=0.01, momentum=0.9, weight_decay=0.003)
 
-train_nn(resnet18_model, train_loader, test_loader, loss_fn, optimizer, 30)
+def show_image(dataset):
+    loader = torch.utils.data.DataLoader(dataset,batch_size=6,shuffle=True)
+    batch = next(iter(loader))
+    image,labels = batch
+
+    grid = torchvision.utils.make_grid(image,nrow=3)
+    plt.figure(figsize=(11,11))
+    plt.imshow(np.transpose(grid,(1,2,0)))
+    plt.show()
+
+#show_image(train_dataset)
+#train_nn(resnet18_model, train_loader, test_loader, loss_fn, optimizer, 30)
